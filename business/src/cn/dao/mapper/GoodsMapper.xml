@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Goods">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="goodsName" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="batch" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="productAddress" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="number" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="goodSize" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="packaging" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="price" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="warnshort" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="warnhight" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goodsName, batch, license, productAddress, number, goodSize, packaging, price, 
+    warnshort, sname, tname, warnhight
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectTotal" parameterType="java.lang.String" resultType="map">
+  select g.goodsName,sum(s.discout) as totaldis from goods g,sales s where g.id=s.gid and s.rtime like '${hehe}%' and s.`status`='已完成' group by g.goodsName
+   </select>
+  
+  
+  
+  <select id="selectNumber" parameterType="java.lang.String" resultType="map">
+  select g.goodsName,sum(s.cnumber) as numberdis from goods g,sales s where g.id=s.gid and s.rtime like '${hehe}%' and s.`status`='已完成' group by g.goodsName
+   </select>
+  
+   <select id="selectSales" parameterType="java.lang.String" resultType="map">
+  select g.goodsName,sum(s.discout) as totaldis from  goods g,sales s where g.id=s.gid and s.rtime between '${hehe}%' and '${xixi}'
+ and s.`status`='已完成' group by g.goodsName
+   </select>
+   
+    <select id="selectPurchase" parameterType="java.lang.String" resultType="map">
+   select g.goodsName,sum(p.total) as totaldis from  goods g,purchase p where g.id=p.gid and p.rtime between  '${hehe}%' and '${xixi}'
+ and p.`status`='已完成' group by g.goodsName
+   </select>
+   
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goodsName = #{goodsName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByTname" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where tname = #{tname,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectBySname" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where sname = #{sname,jdbcType=VARCHAR}
+  </select>
+  
+  
+    <select id="getGoodsList" parameterType="cn.entity.Goods" resultType="cn.entity.Goods">
+   select * from goods
+    </select>
+    
+    <select id="getList" parameterType="cn.entity.Goods" resultType="cn.entity.Goods">
+   select * from goods
+    </select>
+    
+    <select id="getShortList" parameterType="cn.entity.Goods" resultType="cn.entity.Goods">
+   select * from goods where number  &lt;= warnshort
+    </select>
+    
+     <select id="getHightList" parameterType="cn.entity.Goods" resultType="cn.entity.Goods">
+   select * from goods where number  &gt;= warnhight
+    </select>
+    
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.Goods">
+    insert into goods (id, goodsName, batch, 
+      license, productAddress, number, 
+      goodSize, packaging, price, 
+      warnshort, sname, tname, 
+      warnhight)
+    values (#{id,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{batch,jdbcType=VARCHAR}, 
+      #{license,jdbcType=VARCHAR}, #{productAddress,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, 
+      #{goodSize,jdbcType=VARCHAR}, #{packaging,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
+      #{warnshort,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{tname,jdbcType=VARCHAR}, 
+      #{warnhight,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsName != null">
+        goodsName,
+      </if>
+      <if test="batch != null">
+        batch,
+      </if>
+      <if test="license != null">
+        license,
+      </if>
+      <if test="productAddress != null">
+        productAddress,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="goodSize != null">
+        goodSize,
+      </if>
+      <if test="packaging != null">
+        packaging,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="warnshort != null">
+        warnshort,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+      <if test="tname != null">
+        tname,
+      </if>
+      <if test="warnhight != null">
+        warnhight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="batch != null">
+        #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="license != null">
+        #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="productAddress != null">
+        #{productAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="goodSize != null">
+        #{goodSize,jdbcType=VARCHAR},
+      </if>
+      <if test="packaging != null">
+        #{packaging,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="warnshort != null">
+        #{warnshort,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="tname != null">
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="warnhight != null">
+        #{warnhight,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Goods">
+    update goods
+    <set>
+      <if test="goodsName != null">
+        goodsName = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="batch != null">
+        batch = #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="license != null">
+        license = #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="productAddress != null">
+        productAddress = #{productAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="goodSize != null">
+        goodSize = #{goodSize,jdbcType=VARCHAR},
+      </if>
+      <if test="packaging != null">
+        packaging = #{packaging,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="warnshort != null">
+        warnshort = #{warnshort,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="tname != null">
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="warnhight != null">
+        warnhight = #{warnhight,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Goods">
+    update goods
+    set goodsName = #{goodsName,jdbcType=VARCHAR},
+      batch = #{batch,jdbcType=VARCHAR},
+      license = #{license,jdbcType=VARCHAR},
+      productAddress = #{productAddress,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      goodSize = #{goodSize,jdbcType=VARCHAR},
+      packaging = #{packaging,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      warnshort = #{warnshort,jdbcType=INTEGER},
+      sname = #{sname,jdbcType=VARCHAR},
+      tname = #{tname,jdbcType=VARCHAR},
+      warnhight = #{warnhight,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

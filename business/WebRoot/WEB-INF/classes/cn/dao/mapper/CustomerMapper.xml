@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.CustomerMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Customer">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="customerName" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="customerAddress" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="customerTele" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cphone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="identity" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cmail" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cbank" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="caccount" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, customerName, customerAddress, customerTele, cname, cphone, identity, cmail, 
+    cbank, caccount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where customerName = #{customerName,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+    <select id="getCustomerList" parameterType="cn.entity.Customer" resultType="cn.entity.Customer">
+   select * from customer
+    </select>
+  
+   <select id="getList" parameterType="cn.entity.Customer" resultType="cn.entity.Customer">
+   select * from customer
+    </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.Customer">
+    insert into customer (id, customerName, customerAddress, 
+      customerTele, cname, cphone, 
+      identity, cmail, cbank, 
+      caccount)
+    values (#{id,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerAddress,jdbcType=VARCHAR}, 
+      #{customerTele,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, #{cphone,jdbcType=VARCHAR}, 
+      #{identity,jdbcType=VARCHAR}, #{cmail,jdbcType=VARCHAR}, #{cbank,jdbcType=VARCHAR}, 
+      #{caccount,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.Customer">
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="customerName != null">
+        customerName,
+      </if>
+      <if test="customerAddress != null">
+        customerAddress,
+      </if>
+      <if test="customerTele != null">
+        customerTele,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="cphone != null">
+        cphone,
+      </if>
+      <if test="identity != null">
+        identity,
+      </if>
+      <if test="cmail != null">
+        cmail,
+      </if>
+      <if test="cbank != null">
+        cbank,
+      </if>
+      <if test="caccount != null">
+        caccount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null">
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTele != null">
+        #{customerTele,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cphone != null">
+        #{cphone,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null">
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="cmail != null">
+        #{cmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cbank != null">
+        #{cbank,jdbcType=VARCHAR},
+      </if>
+      <if test="caccount != null">
+        #{caccount,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Customer">
+    update customer
+    <set>
+      <if test="customerName != null">
+        customerName = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null">
+        customerAddress = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTele != null">
+        customerTele = #{customerTele,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null">
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cphone != null">
+        cphone = #{cphone,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null">
+        identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="cmail != null">
+        cmail = #{cmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cbank != null">
+        cbank = #{cbank,jdbcType=VARCHAR},
+      </if>
+      <if test="caccount != null">
+        caccount = #{caccount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Customer">
+    update customer
+    set customerName = #{customerName,jdbcType=VARCHAR},
+      customerAddress = #{customerAddress,jdbcType=VARCHAR},
+      customerTele = #{customerTele,jdbcType=VARCHAR},
+      cname = #{cname,jdbcType=VARCHAR},
+      cphone = #{cphone,jdbcType=VARCHAR},
+      identity = #{identity,jdbcType=VARCHAR},
+      cmail = #{cmail,jdbcType=VARCHAR},
+      cbank = #{cbank,jdbcType=VARCHAR},
+      caccount = #{caccount,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

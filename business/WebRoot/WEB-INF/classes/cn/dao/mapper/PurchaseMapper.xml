@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.PurchaseMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Purchase">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="pnumber" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="total" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="message" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="muser" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="rtime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pnumber, total, message, muser, rtime, gid, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from purchase
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+   <select id="getPurchaseList" parameterType="cn.entity.Purchase" resultType="cn.entity.Purchase">
+			select p.*,g.* from purchase p,goods g  where p.gid=g.id
+    </select>
+  
+  
+   <select id="getList" parameterType="cn.entity.Purchase" resultType="cn.entity.Purchase">
+			select p.*,g.* from purchase p,goods g  where p.gid=g.id
+    </select>
+  
+  <select id="getGid" parameterType="java.lang.Integer" resultType="cn.entity.Purchase">
+			select p.*,g.* from purchase p,goods g  where p.id=#{id,jdbcType=INTEGER} and p.gid=g.id
+    </select>
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from purchase
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.Purchase">
+    insert into purchase (id, pnumber, total, 
+      message, muser, rtime, 
+      gid, status)
+    values (#{id,jdbcType=INTEGER}, #{pnumber,jdbcType=INTEGER}, #{total,jdbcType=INTEGER}, 
+      #{message,jdbcType=VARCHAR}, #{muser,jdbcType=VARCHAR}, #{rtime,jdbcType=VARCHAR}, 
+      #{gid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.Purchase">
+    insert into purchase
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pnumber != null">
+        pnumber,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="muser != null">
+        muser,
+      </if>
+      <if test="rtime != null">
+        rtime,
+      </if>
+      <if test="gid != null">
+        gid,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pnumber != null">
+        #{pnumber,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="muser != null">
+        #{muser,jdbcType=VARCHAR},
+      </if>
+      <if test="rtime != null">
+        #{rtime,jdbcType=VARCHAR},
+      </if>
+      <if test="gid != null">
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Purchase">
+    update purchase
+    <set>
+      <if test="pnumber != null">
+        pnumber = #{pnumber,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="muser != null">
+        muser = #{muser,jdbcType=VARCHAR},
+      </if>
+      <if test="rtime != null">
+        rtime = #{rtime,jdbcType=VARCHAR},
+      </if>
+      <if test="gid != null">
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Purchase">
+    update purchase
+    set pnumber = #{pnumber,jdbcType=INTEGER},
+      total = #{total,jdbcType=INTEGER},
+      message = #{message,jdbcType=VARCHAR},
+      muser = #{muser,jdbcType=VARCHAR},
+      rtime = #{rtime,jdbcType=VARCHAR},
+      gid = #{gid,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

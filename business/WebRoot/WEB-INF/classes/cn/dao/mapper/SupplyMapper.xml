@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.SupplyMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Supply">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyName" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="supplyAddress" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="supplyTele" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sphone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="smail" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sbank" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="saccount" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyName, supplyAddress, supplyTele, sname, sphone, smail, sbank, saccount
+  </sql>
+  
+  
+  <select id="getSupplyList" parameterType="cn.entity.Supply" resultType="cn.entity.Supply">
+   select * from supply
+    </select>
+  
+  <select id="getList" parameterType="cn.entity.Supply" resultType="cn.entity.Supply">
+   select * from supply
+    </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from supply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from supply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.Supply">
+    insert into supply (id, companyName, supplyAddress, 
+      supplyTele, sname, sphone, 
+      smail, sbank, saccount
+      )
+    values (#{id,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{supplyAddress,jdbcType=VARCHAR}, 
+      #{supplyTele,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, #{sphone,jdbcType=VARCHAR}, 
+      #{smail,jdbcType=VARCHAR}, #{sbank,jdbcType=VARCHAR}, #{saccount,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.Supply">
+    insert into supply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyName != null">
+        companyName,
+      </if>
+      <if test="supplyAddress != null">
+        supplyAddress,
+      </if>
+      <if test="supplyTele != null">
+        supplyTele,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+      <if test="sphone != null">
+        sphone,
+      </if>
+      <if test="smail != null">
+        smail,
+      </if>
+      <if test="sbank != null">
+        sbank,
+      </if>
+      <if test="saccount != null">
+        saccount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyAddress != null">
+        #{supplyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyTele != null">
+        #{supplyTele,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sphone != null">
+        #{sphone,jdbcType=VARCHAR},
+      </if>
+      <if test="smail != null">
+        #{smail,jdbcType=VARCHAR},
+      </if>
+      <if test="sbank != null">
+        #{sbank,jdbcType=VARCHAR},
+      </if>
+      <if test="saccount != null">
+        #{saccount,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Supply">
+    update supply
+    <set>
+      <if test="companyName != null">
+        companyName = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyAddress != null">
+        supplyAddress = #{supplyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyTele != null">
+        supplyTele = #{supplyTele,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null">
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="sphone != null">
+        sphone = #{sphone,jdbcType=VARCHAR},
+      </if>
+      <if test="smail != null">
+        smail = #{smail,jdbcType=VARCHAR},
+      </if>
+      <if test="sbank != null">
+        sbank = #{sbank,jdbcType=VARCHAR},
+      </if>
+      <if test="saccount != null">
+        saccount = #{saccount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Supply">
+    update supply
+    set companyName = #{companyName,jdbcType=VARCHAR},
+      supplyAddress = #{supplyAddress,jdbcType=VARCHAR},
+      supplyTele = #{supplyTele,jdbcType=VARCHAR},
+      sname = #{sname,jdbcType=VARCHAR},
+      sphone = #{sphone,jdbcType=VARCHAR},
+      smail = #{smail,jdbcType=VARCHAR},
+      sbank = #{sbank,jdbcType=VARCHAR},
+      saccount = #{saccount,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

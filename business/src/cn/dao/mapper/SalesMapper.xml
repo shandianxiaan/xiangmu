@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.SalesMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Sales">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="muser" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cnumber" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sprice" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sTotal" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="discout" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="rtime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="cid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, muser, cnumber, sprice, sTotal, discout, rtime, gid, cid, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sales
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="getSalesList" parameterType="cn.entity.Sales" resultType="cn.entity.Sales">
+			select s.*,g.*,c.customerName from sales s,goods g,customer c  where   s.gid=g.id and c.id=s.cid
+    </select>
+  
+  <select id="getSid" parameterType="java.lang.Integer" resultType="cn.entity.Sales">
+			select s.*,g.*,c.customerName from sales s,goods g,customer c  where s.id=#{id,jdbcType=INTEGER} and  s.gid=g.id and c.id=s.cid
+    </select>
+  
+  <select id="getList" parameterType="cn.entity.Sales" resultType="cn.entity.Sales">
+			select s.*,g.*,c.customerName from sales s,goods g,customer c  where   s.gid=g.id and c.id=s.cid
+    </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sales
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.Sales">
+    insert into sales (id, muser, cnumber, 
+      sprice, sTotal, discout, 
+      rtime, gid, cid, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{muser,jdbcType=VARCHAR}, #{cnumber,jdbcType=INTEGER}, 
+      #{sprice,jdbcType=INTEGER}, #{sTotal,jdbcType=INTEGER}, #{discout,jdbcType=INTEGER}, 
+      #{rtime,jdbcType=VARCHAR}, #{gid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.Sales">
+    insert into sales
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="muser != null">
+        muser,
+      </if>
+      <if test="cnumber != null">
+        cnumber,
+      </if>
+      <if test="sprice != null">
+        sprice,
+      </if>
+      <if test="sTotal != null">
+        sTotal,
+      </if>
+      <if test="discout != null">
+        discout,
+      </if>
+      <if test="rtime != null">
+        rtime,
+      </if>
+      <if test="gid != null">
+        gid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="muser != null">
+        #{muser,jdbcType=VARCHAR},
+      </if>
+      <if test="cnumber != null">
+        #{cnumber,jdbcType=INTEGER},
+      </if>
+      <if test="sprice != null">
+        #{sprice,jdbcType=INTEGER},
+      </if>
+      <if test="sTotal != null">
+        #{sTotal,jdbcType=INTEGER},
+      </if>
+      <if test="discout != null">
+        #{discout,jdbcType=INTEGER},
+      </if>
+      <if test="rtime != null">
+        #{rtime,jdbcType=VARCHAR},
+      </if>
+      <if test="gid != null">
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Sales">
+    update sales
+    <set>
+      <if test="muser != null">
+        muser = #{muser,jdbcType=VARCHAR},
+      </if>
+      <if test="cnumber != null">
+        cnumber = #{cnumber,jdbcType=INTEGER},
+      </if>
+      <if test="sprice != null">
+        sprice = #{sprice,jdbcType=INTEGER},
+      </if>
+      <if test="sTotal != null">
+        sTotal = #{sTotal,jdbcType=INTEGER},
+      </if>
+      <if test="discout != null">
+        discout = #{discout,jdbcType=INTEGER},
+      </if>
+      <if test="rtime != null">
+        rtime = #{rtime,jdbcType=VARCHAR},
+      </if>
+      <if test="gid != null">
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Sales">
+    update sales
+    set muser = #{muser,jdbcType=VARCHAR},
+      cnumber = #{cnumber,jdbcType=INTEGER},
+      sprice = #{sprice,jdbcType=INTEGER},
+      sTotal = #{sTotal,jdbcType=INTEGER},
+      discout = #{discout,jdbcType=INTEGER},
+      rtime = #{rtime,jdbcType=VARCHAR},
+      gid = #{gid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
